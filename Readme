@@ -1,0 +1,102 @@
+----------Setup Instructions------------
+
+java version - 11 
+Spring boot version - 3.0.0
+
+Database configuration has been added in application.properties
+Create db schema and named it artistvotepoc
+DB URL - jdbc:mysql://localhost:3306/artistvotepoc
+update spring.datasource.username & spring.datasource.password in application.properties
+
+Setup db using following commands -
+ 
+Source Material:
+
+ Commands to set up database entities (and initial votes) for 2 music artists are provided below.
+
+CREATE TABLE artist (
+artist_id int unsigned NOT NULL auto_increment,
+artist_label varchar(50) NOT NULL,
+artist_name varchar(150) NOT NULL,
+artist_description varchar(100) NOT NULL,
+is_active tinyint NOT NULL DEFAULT 1,
+create_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+update_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
+CURRENT_TIMESTAMP,
+constraint pk_artist
+primary key(artist_id),
+constraint uk_artist
+unique(artist_label)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
+
+
+CREATE TABLE vote (
+vote_id int unsigned NOT NULL auto_increment,
+artist_id int unsigned NOT NULL,
+create_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+update_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
+CURRENT_TIMESTAMP,
+constraint pk_vote
+primary key(vote_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
+INSERT INTO artist(artist_label, artist_name, artist_description) VALUES
+(&#39;led_zeppelin&#39;, &quot;Led Zeppelin&quot;, &#39;British Rock music pioneers&#39;),
+(&#39;van_halen&#39;, &quot;Van Halen&quot;, &#39;Ultimate party rock band spanning decades&#39;)
+;
+
+-- Start with 2 votes for Led Zeppelin
+SET @zeppelin_id := (SELECT artist_id FROM artist WHERE
+artist_label=&#39;led_zeppelin&#39;);
+INSERT INTO vote(artist_id) VALUES(@zeppelin_id);
+INSERT INTO vote(artist_id) VALUES(@zeppelin_id);
+
+-- Start with 5 votes for Van Halen
+SET @halen_id := (SELECT artist_id FROM artist WHERE artist_label=&#39;van_halen&#39;);
+INSERT INTO vote(artist_id) VALUES(@halen_id);
+INSERT INTO vote(artist_id) VALUES(@halen_id);
+INSERT INTO vote(artist_id) VALUES(@halen_id);
+INSERT INTO vote(artist_id) VALUES(@halen_id);
+INSERT INTO vote(artist_id) VALUES(@halen_id);
+
+***** Vote table can be created by application if not created by Query.****
+
+Requirements - 
+
+ API calls (with documentation for each)
+Swagger url - http://localhost:8080/swagger-ui/index.html
+
+that
+o Get an overview/data summary. All artists, with vote count for each.
+Rest URL - http://localhost:8080/api/show_all
+
+o Get a data summary for a specific artist, with vote count for that artist only.
+Rest URL  - http://localhost:8080/api/get_artist/led_Zeppelin
+
+o Add a vote row (using HTTP POST) to the vote table, for a specific artist.
+Rest URL - http://localhost:8080/api/add_vote
+Add Vote Request -
+{
+  "artist_label": "led_zeppelin",
+  "create_time": "2023-02-25 15:50:50"
+}
+
+Add Vote Response -
+{
+  "message": "Success",
+  "date": "2023-02-27T00:01:44.4293793"
+}
+
+o All responses are in JSON, with a success message and the date Time of the operation.
+ Unit tests in Java are required.
+ All API calls (except the overview) use an artist label value as an input parameter. The convention is
+no spaces, all lowercase, and words separated by underscores.
+
+Acceptance Criteria:
+ Your project name is artist-vote in all lower-case.
+ The database is built from the SQL commands on the Source Material page.
+ Votes are added, (not removed) from an artist. When an artist gets a vote, a row is added to the vote
+table. We are keeping this challenge at a basic scope.
+ Your project builds and runs in a local environment of your reviewer.
+
+
+
