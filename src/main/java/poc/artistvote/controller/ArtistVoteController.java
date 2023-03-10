@@ -46,23 +46,23 @@ public class ArtistVoteController {
     }
 
     @PostMapping("/add_vote")
-    public ResponseEntity<ArtistVoteResponse> addVote(@RequestBody ArtistVoteRequest vote){
-        if(Objects.isNull(vote)){
-            return new ResponseEntity<>(createResponse("Invalid Request"), HttpStatus.OK);
+    public ResponseEntity<?> addVotebyArtistLabel(@RequestParam("artist_label") String artist_label){
+        System.out.println("artist_label :"+artist_label);
+        if(artist_label.isEmpty() || artist_label == null){
+            return new ResponseEntity<>(createResponse("Invalid Request- Provide artist_label Value "), HttpStatus.OK);
         }
-        List<Artist> artist = artistService.getArtistByLabel(vote.getArtist_label());
+        List<Artist> artist = artistService.getArtistByLabel(artist_label.trim());
         if(artist.isEmpty())
-            throw new ArtistNotFoundException("artist_label - " + vote.getArtist_label()
-            );
-        voteService.addVote(createVote(vote, artist));
+            throw new ArtistNotFoundException("artist_label - " + artist_label);
+        voteService.addVote(createVote(artist_label, artist));
         return new ResponseEntity<>(createResponse("Success"), HttpStatus.OK);
     }
 
-	private Vote createVote(ArtistVoteRequest vote, List<Artist> artist) {
+    private Vote createVote(String artist_label, List<Artist> artist) {
 		Vote newVote = new Vote();
         newVote.setArtist_id(artist.get(0).getArtist_id());
-        newVote.setCreate_date(vote.getCreate_time());
-        newVote.setUpdate_date(vote.getCreate_time());
+        newVote.setCreate_date(java.time.LocalDateTime.now());
+        newVote.setUpdate_date(java.time.LocalDateTime.now());
 		return newVote;
 	}
 

@@ -3,6 +3,8 @@
 java version - 11 
 Spring boot version - 3.0.0
 
+Run Application.java to run project on your local eclipse/intellij.Also Update Db Credentials in application.properties.
+
 Database configuration has been added in application.properties
 Create db schema and named it artistvotepoc
 DB URL - jdbc:mysql://localhost:3306/artistvotepoc
@@ -74,17 +76,7 @@ Rest URL  - http://localhost:8080/api/get_artist/led_Zeppelin
 
 o Add a vote row (using HTTP POST) to the vote table, for a specific artist.
 Rest URL - http://localhost:8080/api/add_vote
-Add Vote Request -
-{
-  "artist_label": "led_zeppelin",
-  "create_time": "2023-02-25 15:50:50"
-}
 
-Add Vote Response -
-{
-  "message": "Success",
-  "date": "2023-02-27T00:01:44.4293793"
-}
 
 o All responses are in JSON, with a success message and the date Time of the operation.
  Unit tests in Java are required.

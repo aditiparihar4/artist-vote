@@ -4,6 +4,7 @@ import poc.artistvote.entity.Artist;
 import poc.artistvote.entity.Vote;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Utility {
 
@@ -30,8 +31,9 @@ public class Utility {
     public static Vote buildTestVote(){
         Vote vote = new Vote();
         vote.setArtist_id(3);
-        vote.setCreate_date("2023-02-25");
-        vote.setUpdate_date("2023-02-25");
+        LocalDateTime date =  java.time.LocalDateTime.now();
+        vote.setCreate_date(date);
+        vote.setUpdate_date(date);
         return vote;
     }
 }
