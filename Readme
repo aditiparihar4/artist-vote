@@ -76,7 +76,7 @@ Rest URL  - http://localhost:8080/api/get_artist/led_Zeppelin
 
 o Add a vote row (using HTTP POST) to the vote table, for a specific artist.
 Rest URL - http://localhost:8080/api/add_vote
-
+Input is Artist Label
 
 o All responses are in JSON, with a success message and the date Time of the operation.
  Unit tests in Java are required.
