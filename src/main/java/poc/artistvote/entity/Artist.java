@@ -1,14 +1,10 @@
 package poc.artistvote.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.sql.Date;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "artist")
 
@@ -16,15 +12,26 @@ public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int artist_id;
-    private String artist_label;
-    private String artist_name;
-    private String artist_description;
-	private int is_active;
-    private Date create_date;
-    private Date update_date;
-    
-    private String vote_count;
+	@Column(nullable = false)
+	private int artist_id;
+	@Column(length=50, nullable = false)
+	private String artist_label;
+	@Column(length=50, nullable = false)
+	private String artist_name;
+	@Column(length=100, nullable = false)
+	private String artist_description;
+	@Column(name= "is_active", columnDefinition = "tinyint(1) default true")
+	private Boolean is_active = true;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Timestamp create_date;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE\n" +
+			"CURRENT_TIMESTAMP")
+	private Timestamp update_date;
+	@Transient
+	private String vote_count;
     public int getArtist_id() {
 		return artist_id;
 	}
@@ -55,22 +62,22 @@ public class Artist {
 	public void setVote_count(String vote_count) {
 		this.vote_count = vote_count;
 	}
-	public int getIs_active() {
+	public Boolean getIs_active() {
 		return is_active;
 	}
-	public void setIs_active(int is_active) {
+	public void setIs_active(Boolean is_active) {
 		this.is_active = is_active;
 	}
-	public Date getCreate_date() {
+	public Timestamp getCreate_date() {
 		return create_date;
 	}
-	public void setCreate_date(Date create_date) {
+	public void setCreate_date(Timestamp create_date) {
 		this.create_date = create_date;
 	}
-	public Date getUpdate_date() {
+	public Timestamp getUpdate_date() {
 		return update_date;
 	}
-	public void setUpdate_date(Date update_date) {
+	public void setUpdate_date(Timestamp update_date) {
 		this.update_date = update_date;
 	}
 

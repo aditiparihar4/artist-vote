@@ -1,5 +1,6 @@
 package poc.artistvote.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import poc.artistvote.entity.Artist;
 import poc.artistvote.entity.ArtistVoteRequest;
 import poc.artistvote.entity.ArtistVoteResponse;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,23 +48,22 @@ public class ArtistVoteController {
     }
 
     @PostMapping("/add_vote")
-    public ResponseEntity<?> addVotebyArtistLabel(@RequestParam("artist_label") String artist_label){
-        System.out.println("artist_label :"+artist_label);
-        if(artist_label.isEmpty() || artist_label == null){
-            return new ResponseEntity<>(createResponse("Invalid Request- Provide artist_label Value "), HttpStatus.OK);
+    public ResponseEntity<ArtistVoteResponse> addVote(@RequestBody ArtistVoteRequest vote){
+        if(Objects.isNull(vote) || StringUtils.isEmpty(vote.getArtist_label())){
+            return new ResponseEntity<>(createResponse("Invalid Request"), HttpStatus.BAD_REQUEST);
         }
-        List<Artist> artist = artistService.getArtistByLabel(artist_label.trim());
+        List<Artist> artist = artistService.getArtistByLabel(vote.getArtist_label());
         if(artist.isEmpty())
-            throw new ArtistNotFoundException("artist_label - " + artist_label);
-        voteService.addVote(createVote(artist_label, artist));
+            throw new ArtistNotFoundException("artist_label - " + vote.getArtist_label());
+        voteService.addVote(createVote(vote.getArtist_label(), artist));
         return new ResponseEntity<>(createResponse("Success"), HttpStatus.OK);
     }
 
     private Vote createVote(String artist_label, List<Artist> artist) {
 		Vote newVote = new Vote();
         newVote.setArtist_id(artist.get(0).getArtist_id());
-        newVote.setCreate_date(java.time.LocalDateTime.now());
-        newVote.setUpdate_date(java.time.LocalDateTime.now());
+        newVote.setCreate_date(Timestamp.valueOf(java.time.LocalDateTime.now()));
+        newVote.setUpdate_date(Timestamp.valueOf(java.time.LocalDateTime.now()));
 		return newVote;
 	}
 

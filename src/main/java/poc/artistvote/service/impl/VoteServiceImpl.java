@@ -20,11 +20,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public long countVote(int artist_id) {
-        List<Vote> voteList =  voteRepo.findvotes(artist_id);
-        return voteList.size();
+        long voteList =  voteRepo.findvotes(artist_id);
+        return voteList;
     }
-
-
-
-
 }

@@ -37,7 +37,7 @@ public class VoteServiceUnitTest {
 
     @Test
     void getAllVoteCount_Test(){
-        when(voteRepo.findvotes(3)).thenReturn(List.of(vote));
+        when(voteRepo.findvotes(3)).thenReturn(1L);
         long votes = voteService.countVote(3);
         assertEquals(1, votes);
         verify(this.voteRepo).findvotes(3);

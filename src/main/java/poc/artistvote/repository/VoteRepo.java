@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VoteRepo extends JpaRepository<Vote, Integer>  {
-
-    @Query("SELECT t FROM Vote t WHERE t.artist_id = ?1")
-    List<Vote> findvotes(int artist_id);
+    @Query("SELECT COUNT(*)  FROM Vote t WHERE t.artist_id = ?1")
+    long findvotes(int artist_id);
 
 
 }
