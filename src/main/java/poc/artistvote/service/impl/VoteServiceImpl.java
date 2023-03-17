@@ -1,12 +1,10 @@
 package poc.artistvote.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import poc.artistvote.entity.Vote;
 import poc.artistvote.repository.VoteRepo;
 import poc.artistvote.service.VoteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class VoteServiceImpl implements VoteService {
@@ -20,7 +18,6 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public long countVote(int artist_id) {
-        long voteList =  voteRepo.findvotes(artist_id);
-        return voteList;
+        return voteRepo.findvotes(artist_id);
     }
 }

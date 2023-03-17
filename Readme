@@ -11,6 +11,8 @@ DB URL - jdbc:mysql://localhost:3306/artistvotepoc
 update spring.datasource.username & spring.datasource.password in application.properties
 
 Database tables and initial entries will be created by code after running the application.
+* Before running the application make sure db schema should be present and it should not have any tables.
+drop using cmd - drop table artist;
 
 Requirements - 
 

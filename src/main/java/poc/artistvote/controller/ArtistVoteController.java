@@ -1,6 +1,11 @@
 package poc.artistvote.controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 import poc.artistvote.entity.Artist;
 import poc.artistvote.entity.ArtistVoteRequest;
 import poc.artistvote.entity.ArtistVoteResponse;
@@ -8,11 +13,6 @@ import poc.artistvote.entity.Vote;
 import poc.artistvote.exception.ArtistNotFoundException;
 import poc.artistvote.service.ArtistService;
 import poc.artistvote.service.VoteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;

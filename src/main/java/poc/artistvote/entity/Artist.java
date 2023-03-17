@@ -2,6 +2,7 @@ package poc.artistvote.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.sql.Timestamp;
 
@@ -14,7 +15,7 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
 	private int artist_id;
-	@Column(length=50, nullable = false)
+	@Column(length=50, nullable = false,unique=true)
 	private String artist_label;
 	@Column(length=50, nullable = false)
 	private String artist_name;
