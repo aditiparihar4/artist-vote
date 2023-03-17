@@ -10,57 +10,7 @@ Create db schema and named it artistvotepoc
 DB URL - jdbc:mysql://localhost:3306/artistvotepoc
 update spring.datasource.username & spring.datasource.password in application.properties
 
-Setup db using following commands -
- 
-Source Material:
-
- Commands to set up database entities (and initial votes) for 2 music artists are provided below.
-
-CREATE TABLE artist (
-artist_id int unsigned NOT NULL auto_increment,
-artist_label varchar(50) NOT NULL,
-artist_name varchar(150) NOT NULL,
-artist_description varchar(100) NOT NULL,
-is_active tinyint NOT NULL DEFAULT 1,
-create_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-update_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
-CURRENT_TIMESTAMP,
-constraint pk_artist
-primary key(artist_id),
-constraint uk_artist
-unique(artist_label)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
-
-
-CREATE TABLE vote (
-vote_id int unsigned NOT NULL auto_increment,
-artist_id int unsigned NOT NULL,
-create_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-update_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
-CURRENT_TIMESTAMP,
-constraint pk_vote
-primary key(vote_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
-INSERT INTO artist(artist_label, artist_name, artist_description) VALUES
-(&#39;led_zeppelin&#39;, &quot;Led Zeppelin&quot;, &#39;British Rock music pioneers&#39;),
-(&#39;van_halen&#39;, &quot;Van Halen&quot;, &#39;Ultimate party rock band spanning decades&#39;)
-;
-
--- Start with 2 votes for Led Zeppelin
-SET @zeppelin_id := (SELECT artist_id FROM artist WHERE
-artist_label=&#39;led_zeppelin&#39;);
-INSERT INTO vote(artist_id) VALUES(@zeppelin_id);
-INSERT INTO vote(artist_id) VALUES(@zeppelin_id);
-
--- Start with 5 votes for Van Halen
-SET @halen_id := (SELECT artist_id FROM artist WHERE artist_label=&#39;van_halen&#39;);
-INSERT INTO vote(artist_id) VALUES(@halen_id);
-INSERT INTO vote(artist_id) VALUES(@halen_id);
-INSERT INTO vote(artist_id) VALUES(@halen_id);
-INSERT INTO vote(artist_id) VALUES(@halen_id);
-INSERT INTO vote(artist_id) VALUES(@halen_id);
-
-***** Vote table can be created by application if not created by Query.****
+Database tables and initial entries will be created by code after running the application.
 
 Requirements - 
 
